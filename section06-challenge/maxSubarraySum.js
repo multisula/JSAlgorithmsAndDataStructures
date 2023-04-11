@@ -22,13 +22,16 @@ Space Complexity - O(1)
 
 function maxSubarraySum(arr, windowSize){
   if(arr.length < windowSize) return null
-  let maxSum = 0
-  for(let i = 0; i < arr.length - (windowSize - 1); i++){
-    let sum = 0
-    for(let j = i; j < i + windowSize; j++){
-      sum += arr[j]
-    }
-    if(maxSum < sum) maxSum = sum
+  let maxSum, sum, i
+  maxSum = sum = 0
+  for(i = 0; i < windowSize; i++){
+    maxSum = sum += arr[i]
+  }
+  while(i < arr.length){
+    sum += arr[i]
+    sum -= arr[i - windowSize]
+    if (maxSum < sum) maxSum = sum
+    i++
   }
   return maxSum
 }
